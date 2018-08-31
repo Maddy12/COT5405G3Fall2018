@@ -1,0 +1,63 @@
+/*Divide Big Integers by Jack P. Oakley
+This program takes signed integers of any size in the form of a string and
+divides them to give integer division*/
+
+public class DivideBigInt
+{
+   public static void main(String[] args)
+   {
+      String bigInt = "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+      String medInt = "85276";
+      String smallInt = "12";
+      String output;
+            
+      output = getSign(bigInt, smallInt);
+      medInt = stripSign(bigInt);
+      smallInt = stripSign(smallInt);
+      output = output + divide(bigInt, smallInt);
+      System.out.println(output);
+      
+   }//End Main()
+    
+   //This method determines the sign for the output and returns it in a string
+   public static String getSign(String str1, String str2)
+   { 
+     String output = "";
+     char sign1 = str1.charAt(0);
+     char sign2 = str2.charAt(0);
+     if((sign1 == '-' && sign2 != '-') || (sign1 != '-' && sign2 == '-'))
+        output = output + "-";
+     else
+        output = output + "+";
+     return output;  
+   }//End getSign()
+   
+   //This method strips any signs out of the string number
+   public static String stripSign(String str)
+   {
+      if(str.charAt(0) == '-' || str.charAt(0) == '+')
+         return str.substring(1,str.length());
+      else
+         return str;
+   }
+   
+   //This method builds a string of the integer division result
+   public static String divide(String str1, String str2)
+   {
+      String answer = "";
+      int num1;
+      int num2 = Integer.parseInt(str2);
+      int carry = 0;
+      
+      while(str1.length() > 0)
+      {
+         num1 = Integer.parseInt(str1.substring(0,1));
+         str1 = str1.substring(1, str1.length());
+         carry = carry * 10 + num1;
+         answer = answer + carry / num2;
+         if(carry >= num2)
+            carry = carry % num2;
+      }
+      return answer;
+   }//End divide()
+}//End DivideBigInt class
