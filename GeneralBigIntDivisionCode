@@ -2,11 +2,15 @@
 This program takes signed integers of any size in the form of a string and
 divides them to give integer division*/
 import java.util.Random;
+import java.util.Scanner;
 
 public class DivideBigInt
 {
    public static Random gen = new Random();
-   private static final int numLoops = 1000;
+   private static final int NUMLOOPS = 1000;
+   //Due to overflow errors, the MAXDIVISOR had to be restricted to less digits
+   //10 or more Digits crashes, 9 digits gets negatives in the middle of numbers
+   private static final int MAXDIVISOR = 8;
    
    public static void main(String[] args)
    {
@@ -69,9 +73,14 @@ public class DivideBigInt
          num1 = Integer.parseInt(str1.substring(0,1));
          str1 = str1.substring(1, str1.length());
          carry = carry * 10 + num1;
-         answer = answer + carry / num2;
-         if(carry >= num2)
-            carry = carry % num2;
+         if(num2 == 0)
+            answer = "0";
+         else
+         {
+            answer = answer + carry / num2;
+            if(carry >= num2)
+               carry = carry % num2;
+         }
       }
       return answer;
    }//End divide()
@@ -95,10 +104,13 @@ public class DivideBigInt
    public static void repeatCases(int n)
    {
       String s1, s2, output;
-      for(int i = 0; i < numLoops; i++)
+      for(int i = 0; i < NUMLOOPS; i++)
       {
          s1 = buildStringNum(n);
-         s2 = buildStringNum(n);
+         if(n <= MAXDIVISOR)
+            s2 = buildStringNum(n);
+         else
+            s2 = buildStringNum(MAXDIVISOR);
          output = getSign(s1, s2);
          s1 = stripSign(s1);
          s2 = stripSign(s2);
@@ -110,9 +122,17 @@ public class DivideBigInt
    //This method runs all of the cases
    public static void runCases(int nStart, int nStop, int nMult)
    {
+      Scanner kb = new Scanner(System.in);
       for(int n = nStart; n <= nStop; n *= nMult)
       {
+         System.out.println("n= " + n);
          repeatCases(n);
+         if(n < nStop)
+         {
+            System.out.println("Enter any letter and press enter to continue " +
+               "onto n= " + n * nMult);
+            kb.next();
+         }
       }
    }//End runCases()
    
