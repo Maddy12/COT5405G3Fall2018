@@ -1,23 +1,38 @@
 /*Divide Big Integers by Jack P. Oakley
 This program takes signed integers of any size in the form of a string and
 divides them to give integer division*/
+import java.util.Random;
 
 public class DivideBigInt
 {
+   public static Random gen = new Random();
+   private static final int numLoops = 1000;
+   
    public static void main(String[] args)
    {
+      final int nStart = 4;
+      final int nStop = 512;
+      final int nMult = 2;
+   
+      generalCase();
+      runCases(nStart, nStop, nMult);
+   }//End main()
+   
+   //This method runs the general case and test numbers
+   public static void generalCase()
+   {
+      //This bigInt is a string of numbers exactly 1000 digits long
       String bigInt = "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
       String medInt = "85276";
       String smallInt = "12";
       String output;
-            
+      
       output = getSign(bigInt, smallInt);
       medInt = stripSign(bigInt);
       smallInt = stripSign(smallInt);
       output = output + divide(bigInt, smallInt);
       System.out.println(output);
-      
-   }//End Main()
+   }//End generalCase()
     
    //This method determines the sign for the output and returns it in a string
    public static String getSign(String str1, String str2)
@@ -60,4 +75,45 @@ public class DivideBigInt
       }
       return answer;
    }//End divide()
+   
+   //This method returns a random string of numbers of the given size
+   public static String buildStringNum(int size)
+   {
+      String s;
+      if(gen.nextBoolean())
+         s = "+";
+      else
+         s = "-";
+      for(int i = 0; i < size; i++)
+      {
+         s = s + (char)(gen.nextInt(10) + 48);
+      }
+      return s;
+   }//End buildStringNum()
+   
+   //This method runs the case with numLoops random inputs of size n
+   public static void repeatCases(int n)
+   {
+      String s1, s2, output;
+      for(int i = 0; i < numLoops; i++)
+      {
+         s1 = buildStringNum(n);
+         s2 = buildStringNum(n);
+         output = getSign(s1, s2);
+         s1 = stripSign(s1);
+         s2 = stripSign(s2);
+         output = output + divide(s1, s2);
+         System.out.println(output);
+      }
+   }//End repeatCases()
+   
+   //This method runs all of the cases
+   public static void runCases(int nStart, int nStop, int nMult)
+   {
+      for(int n = nStart; n <= nStop; n *= nMult)
+      {
+         repeatCases(n);
+      }
+   }//End runCases()
+   
 }//End DivideBigInt class
