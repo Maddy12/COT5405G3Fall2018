@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class DivideBigInt
 {
-   public static Random gen = new Random();
+   public static final Random gen = new Random();
    private static final int NUMLOOPS = 1000;
    //Due to overflow errors, the MAXDIVISOR had to be restricted to less digits
    //10 or more Digits crashes, 9 digits gets negatives in the middle of numbers
@@ -41,14 +41,13 @@ public class DivideBigInt
    //This method determines the sign for the output and returns it in a string
    public static String getSign(String str1, String str2)
    { 
-     String output = "";
      char sign1 = str1.charAt(0);
      char sign2 = str2.charAt(0);
+
      if((sign1 == '-' && sign2 != '-') || (sign1 != '-' && sign2 == '-'))
-        output = output + "-";
+        return "-";
      else
-        output = output + "+";
-     return output;  
+        return "+";  
    }//End getSign()
    
    //This method strips any signs out of the string number
@@ -88,16 +87,24 @@ public class DivideBigInt
    //This method returns a random string of numbers of the given size
    public static String buildStringNum(int size)
    {
-      String s;
+      StringBuilder s = new StringBuilder();
+
+      // Sign
       if(gen.nextBoolean())
-         s = "+";
+         s.append('+');
       else
-         s = "-";
-      for(int i = 0; i < size; i++)
+         s.append('-');
+
+      // First digit should be in [1, 9] range
+      s.append((char)((gen.nextInt(9) + 1) + '0'));
+
+      // Digits other than the first one in [0, 9] range
+      for(int i = 0; i < size - 1; i++)
       {
-         s = s + (char)(gen.nextInt(10) + 48);
+         s.append((char)(gen.nextInt(10) + 48));
       }
-      return s;
+
+      return s.toString();
    }//End buildStringNum()
    
    //This method runs the case with numLoops random inputs of size n
@@ -123,6 +130,7 @@ public class DivideBigInt
    public static void runCases(int nStart, int nStop, int nMult)
    {
       Scanner kb = new Scanner(System.in);
+
       for(int n = nStart; n <= nStop; n *= nMult)
       {
          System.out.println("n= " + n);
@@ -134,6 +142,8 @@ public class DivideBigInt
             kb.next();
          }
       }
+
+      kb.close();
    }//End runCases()
    
 }//End DivideBigInt class
