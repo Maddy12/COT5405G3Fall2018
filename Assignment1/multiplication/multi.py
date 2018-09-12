@@ -3,6 +3,9 @@ from random import randint, choice
 from time import time
 import matplotlib.pyplot as plt
 
+author = "Madeline Schiappa, Jack P. Oakley, Elakkat Gireesh, Shah Hassan"
+author_email = "madelineschiappa@knights.ucf.edu, jack.p.oakley@knights.ucf.edu, elakkat@knights.ucf.edu, shahhassan@knights.ucf.edu"
+
 
 def measure_performance(function, rounds=8, n=1000):
     """
@@ -22,7 +25,7 @@ def measure_performance(function, rounds=8, n=1000):
         max_runtimes.append(max_runtime)
     plt.plot(int_len_list, avg_runtimes)
     plt.plot(int_len_list, max_runtimes)
-    plt.legend(['avg', 'max'], loc='upper left')
+    plt.legend(['Average Runtime', 'Max Runtime'], loc='upper left')
     plt.xlabel("Integer Size")
     plt.ylabel("Runtime in microseconds")
     plt.title("Runtime for Multiplying Long Integers")
