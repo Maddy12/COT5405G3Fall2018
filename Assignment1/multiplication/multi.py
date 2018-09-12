@@ -22,8 +22,8 @@ def measure_performance(function, rounds=8, n=1000):
 
 
 def multiply_no_optimization(int_len, n=1000):
-    end_neg = -(10L**int_len)+1
-    start_neg = -(10L**(int_len-1))
+    start_neg = -(10L**int_len)+1
+    end_neg = -(10L**(int_len-1))
     start_pos = 10L**(int_len-1)
     end_pos = (10L**int_len)-1  # max value of len int_len
     runtimes = list()
