@@ -21,14 +21,23 @@ def measure_performance(function, rounds=8, n=1000, type='avg'):
     plt.show()
 
 
-def avg_multiply_no_optimization(int_len, type, n=1000):
-    #start = 10L**(int_len-1)  # min value of len int_len
-    start = -(10L**int_len)+1
-    end = (10L**int_len)-1  # max value of len int_len
+def multiply_no_optimization(int_len, type, n=1000):
+    end_neg = -(10L**int_len)+1
+    start_neg = -(10L**int_len)
+    start_pos = 10L**(int_len-1)
+    end_pos = (10L**int_len)-1  # max value of len int_len
     runtimes = list()
     for i in range(n-1):
+        if randint(1, 2) == 1:
+            x = randint(start_pos, end_pos)
+        else:
+            x = randint(start_neg, end_neg)
+        if randint(1, 2) == 1:
+            y = randint(start_pos, end_pos)
+        else:
+            y = randint(start_neg, end_neg)
         start_time = time()
-        results = randint(start, end) * randint(start, end)
+        results = x*y
         print(results)
         end_time = time()
         diff = end_time - start_time
@@ -36,21 +45,5 @@ def avg_multiply_no_optimization(int_len, type, n=1000):
     return np.mean(runtimes), np.max(runtimes)
 
 
-def max_multiply_no_optimization(int_len, n=1000):
-    start = -(10L**int_len)-1  # min value of len int_len
-    end = (10L**int_len)-1  # max value of len int_len
-    runtimes = list()
-    for i in range(n-1):
-        x = randint(start, end)
-        y = randint(start, end)
-        start_time = time()
-        results =  x*y
-        print(results)
-        end_time = time()
-        diff = end_time - start_time
-        runtimes.append(diff)
-    return np.max(runtimes)
-
-
 if __name__ == '__main__':
-    measure_performance(function=avg_multiply_no_optimization)
+    measure_performance(function=multiply_no_optimization)
