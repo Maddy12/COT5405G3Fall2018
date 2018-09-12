@@ -41,8 +41,10 @@ def max_multiply_no_optimization(int_len, n=1000):
     end = (10L**int_len)-1  # max value of len int_len
     runtimes = list()
     for i in range(n-1):
+        x = randint(start, end)
+        y = randint(start, end)
         start_time = time()
-        results = randint(start, end) * randint(start, end)
+        results =  x*y
         print(results)
         end_time = time()
         diff = end_time - start_time
