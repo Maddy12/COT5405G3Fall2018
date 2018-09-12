@@ -4,7 +4,7 @@ from time import time
 import matplotlib.pyplot as plt
 
 
-def measure_performance(function, rounds=8, n=1000, type='avg'):
+def measure_performance(function, rounds=8, n=1000):
     int_len_list = [2**x for x in np.arange(2, rounds+2)]
     avg_runtimes = list()
     max_runtimes = list()
@@ -16,14 +16,14 @@ def measure_performance(function, rounds=8, n=1000, type='avg'):
     plt.plot(int_len_list, max_runtimes)
     plt.legend(['avg', 'max'], loc='upper left')
     plt.xlabel("Integer Size")
-    plt.ylabel("Runtime in microseconds".format(type))
+    plt.ylabel("Runtime in microseconds")
     plt.title("Runtime for Multiplying Long Integers")
     plt.show()
 
 
-def multiply_no_optimization(int_len, type, n=1000):
+def multiply_no_optimization(int_len, n=1000):
     end_neg = -(10L**int_len)+1
-    start_neg = -(10L**int_len)
+    start_neg = -(10L**(int_len-1))
     start_pos = 10L**(int_len-1)
     end_pos = (10L**int_len)-1  # max value of len int_len
     runtimes = list()
