@@ -50,7 +50,6 @@ def multiply_no_optimization(int_len, n=1000):
         y = choice([randint(start_neg, end_neg), randint(start_pos, end_pos)])
         start_time = time()
         results = x*y
-        print(results)
         end_time = time()
         diff = end_time - start_time
         runtimes.append(diff)
