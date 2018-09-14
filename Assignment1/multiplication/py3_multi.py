@@ -34,8 +34,8 @@ def measure_performance(function, rounds=8, n=1000):
 
 def multiply_no_optimization(int_len, n=1000):
     """
-    This function multiplys two random signed integers based on a passed integer length.
-    It multiplys two random values 1000 times and records each runtime where then the maximum and average are calculated.
+    This function multiplies two random signed integers based on a passed integer length.
+    It multiplies two random values 1000 times and records each runtime where then the maximum and average are calculated.
     :param int_len: Length of integer
     :param n: Rounds to multiply, new random integers are initialized each run.
     :return:
@@ -51,13 +51,53 @@ def multiply_no_optimization(int_len, n=1000):
             x = choice([randint(start_neg, end_neg), randint(start_pos, end_pos)])
             y = choice([randint(start_neg, end_neg), randint(start_pos, end_pos)])
             start_time = time()
-            results = x*y
+            a, b, sign = strip_signs(x, y)
+            results = multiply_by_digit(a, b, sign)
             end_time = time()
             diff = end_time - start_time
             runtimes.append(diff)
         return np.mean(runtimes), np.max(runtimes)
     except:
         import pdb;pdb.set_trace()
+
+
+def strip_signs(a, b):
+    if (a < 0 and b < 0) or (a > 0 and b > 0):
+        res_sign = '-'
+    else:
+        res_sign = '+'
+    a = abs(a)
+    b = abs(b)
+    return a, b, res_sign
+
+
+def multiply_by_digit(a, b, sign):
+    sum_result = x = 0
+    while b > 0:
+        carry = y = res2sum = 0
+        a_temp = a
+        shift_x = 10**x
+        b_lsb = int(b % 10)
+        while a_temp > 0:
+            shift_y = 10**y
+            a_lsb = int(a_temp % 10)
+            result = a_lsb * b_lsb + carry
+            if result > 9:
+                carry = int(result / 10)
+                result %= 10
+            else:
+                carry = 0
+            a_temp = int(a_temp / 10)
+            res2sum += result * shift_y
+            y += 1
+        res2sum += carry * shift_y * 10
+        sum_result += res2sum * shift_x
+        b = int(b / 10)
+        x += 1
+    sum_result = int(sign + str(sum_result))
+    # Line 97 crashes when converting large nums to int, using float instead gets +inf or -inf
+    print(sum_result)
+    return sum_result
 
 
 if __name__ == '__main__':
