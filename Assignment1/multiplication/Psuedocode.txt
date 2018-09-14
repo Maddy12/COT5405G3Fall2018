@@ -1,0 +1,35 @@
+READ first number (a)
+READ second number (b)
+INITIALIZE sum to 0
+INITIALIZE x to 0
+LOOP WHILE b > 0
+{
+	INITIALIZE carry to 0
+	INITIALIZE y to 0
+	INITIALIZE aTemp to a
+	INITIALIZE res2sum to 0
+	COMPUTE shiftX as 10^x
+	COMPUTE bLSB as the remainder of dividing b by 10 //Modulus Operator
+	LOOP WHILE a > 0
+	{
+		COMPUTE shiftY as 10^y
+		COMPUTE aLSB as the remainder of dividing a by 10 //Modulus Operator
+		COMPUTE result as aLSB * bLSB + carry
+		IF result > 9 THEN
+			COMPUTE carry as result / 10 //Integer Math (No remainder)
+			COMPUTE result as the remainder of dividing result by 10 //Modulus Operator
+		ELSE
+			SET carry to 0
+		ENDIF
+		COMPUTE aTemp as aTemp / 10	//Integer Math (No remainder)
+		COMPUTE res2sum as res2sum + (result * shiftY)
+		INCREMENT y by 1
+	}
+	ENDWHILE
+	COMPUTE res2sum as res2sum + (carry * shiftY * 10)
+	COMPUTE sum as sum + res2sum * shiftX
+	COMPUTE b as b / 10 //Integer Math (No remainder)
+	INCREMENT x by 1
+}
+ENDWHILE
+//sum will contain the result of multiplying a * b
