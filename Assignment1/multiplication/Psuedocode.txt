@@ -20,7 +20,7 @@ LOOP WHILE b > 0
 	LOOP WHILE aTemp > 0
 	{
 		COMPUTE shiftY as 10^y
-		COMPUTE aLSB as the remainder of dividing a by 10 //Modulus Operator
+		COMPUTE aLSB as the remainder of dividing aTemp by 10 //Modulus Operator
 		COMPUTE result as aLSB * bLSB + carry
 		IF result > 9 THEN
 			COMPUTE carry as result / 10 //Integer Math (No remainder)
