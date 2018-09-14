@@ -1,5 +1,12 @@
 READ first number (a)
 READ second number (b)
+IF (a < 0 AND b < 0) OR (a > 0 AND b > 0) THEN
+	SET resultSign to positive
+ELSE
+	SET resultSign to negative
+ENDIF
+REMOVE sign of a //Absolute value or multiply by -1 if negative
+REMOVE sign of b //Absolute value or multiply by -1 if negative
 INITIALIZE sum to 0
 INITIALIZE x to 0
 LOOP WHILE b > 0
@@ -33,3 +40,5 @@ LOOP WHILE b > 0
 }
 ENDWHILE
 //sum will contain the result of multiplying a * b
+APPEND resultSign to sum
+RETURN sum
