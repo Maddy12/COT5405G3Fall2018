@@ -17,7 +17,7 @@ LOOP WHILE b > 0
 	INITIALIZE res2sum to 0
 	COMPUTE shiftX as 10^x
 	COMPUTE bLSB as the remainder of dividing b by 10 //Modulus Operator
-	LOOP WHILE a > 0
+	LOOP WHILE aTemp > 0
 	{
 		COMPUTE shiftY as 10^y
 		COMPUTE aLSB as the remainder of dividing a by 10 //Modulus Operator
