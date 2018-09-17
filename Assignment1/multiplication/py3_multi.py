@@ -17,6 +17,7 @@ def measure_performance(function, rounds=8, n=1000):
     :return:
     """
     int_len_list = [2**x for x in np.arange(2, rounds+2)]
+    # int_len_list = [512, 1024]  # This is test code to jump to the size 512 test
     avg_runtimes = list()
     max_runtimes = list()
     for int_len in int_len_list:
@@ -54,6 +55,7 @@ def multiply_no_optimization(int_len, n=1000):
             a, b, sign = strip_signs(x, y)
             results = multiply_by_digit(a, b, sign)
             end_time = time()
+            print(results)
             diff = end_time - start_time
             runtimes.append(diff)
         return np.mean(runtimes), np.max(runtimes)
@@ -74,7 +76,7 @@ def strip_signs(a, b):
 def multiply_by_digit(a, b, sign):
     sum_result = x = 0
     while b > 0:
-        carry = y = res2sum = 0
+        carry = y = res2sum = shift_y = 0
         a_temp = a
         shift_x = 10**x
         b_lsb = int(b % 10)
@@ -88,6 +90,7 @@ def multiply_by_digit(a, b, sign):
             else:
                 carry = 0
             a_temp = int(a_temp / 10)
+            # Prev line crashes when number has 512+ digits
             res2sum += result * shift_y
             y += 1
         res2sum += carry * shift_y * 10
@@ -95,8 +98,7 @@ def multiply_by_digit(a, b, sign):
         b = int(b / 10)
         x += 1
     sum_result = int(sign + str(sum_result))
-    # Line 97 crashes when converting large nums to int, using float instead gets +inf or -inf
-    print(sum_result)
+    # print(sum_result)
     return sum_result
 
 
