@@ -64,6 +64,13 @@ def multiply_no_optimization(int_len, n=1000):
 
 
 def strip_signs(a, b):
+    """
+    This function strips the signs off of the signed integers and returns their absolute value as well as determines
+    the sign that will be on the resulting product and returns it.
+    :param a: The first signed number input
+    :param b: The second signed number input
+    :return: Absolute value of a, Absolute value of b, Resulting sign from product
+    """
     if (a < 0 and b < 0) or (a > 0 and b > 0):
         res_sign = '-'
     else:
@@ -74,6 +81,15 @@ def strip_signs(a, b):
 
 
 def multiply_by_digit(a, b, sign):
+    """
+    This function takes two unsigned integers and goes digit by digit to multiply each digit starting from the LSB by
+    making use of a carry digit and then adds the resulting multiplications together to get an end result of the product
+    of the two integers.  It then attaches the passed in sign to return a properly signed product.
+    :param a: First integer to be multiplied
+    :param b: Second integer to be multiplied
+    :param sign: Sign of the end product
+    :return: Product of a and b with proper sign
+    """
     sum_result = x = 0
     while b > 0:
         carry = y = res2sum = shift_y = 0
