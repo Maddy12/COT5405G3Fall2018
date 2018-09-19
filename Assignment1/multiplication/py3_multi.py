@@ -1,6 +1,8 @@
 import numpy as np
+import os
 from random import randint, choice
 from time import time
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 author = "Madeline Schiappa, Jack P. Oakley, Elakkat Gireesh, Shah Hassan"
@@ -17,25 +19,44 @@ def measure_performance(algorithm, rounds=8, n=1000, max_rt=False, log=False):
     :return:
     """
     int_len_list = [2**x for x in np.arange(2, rounds+2)]
-    # int_len_list = [512, 1024]  # This is test code to jump to the size 512 test
+    # int_len_list = [4, 8, 32]  # This is test code to jump to the size 512 test
+    save_dir = os.getcwd()
     avg_runtimes = list()
     max_runtimes = list()
+    runtimes_dict = dict()
     for int_len in int_len_list:
-        avg_runtime, max_runtime = multiply_simulation(int_len, algorithm, n)
+        avg_runtime, max_runtime, runtimes = multiply_simulation(int_len, algorithm, n)
+        runtimes_dict[str(int_len) + "_digits"] = runtimes
         avg_runtimes.append(avg_runtime)
         max_runtimes.append(max_runtime)
+        sns.distplot(runtimes, kde_kws={'label' : 'KDE'})
+        plt.xlabel("Runtime in microseconds")
+        plt.ylabel("Kernel Density Estimate")
+        plt.title("Runtime Distribution for " + str(int_len))
+        plt.savefig(os.path.join(save_dir, str(int_len) + "_digits"))
+        plt.close()
+    plot_avg_runtime(int_len_list, avg_runtimes, max_runtimes, save_dir, log=False, max_rt=False)
+    plot_avg_runtime(int_len_list, avg_runtimes, max_runtimes, save_dir, log=True, max_rt=False)
+
+
+def plot_avg_runtime(int_len_list, avg_runtimes, max_runtimes, save_dir, log=False, max_rt=False):
     fig = plt.figure()
     ax = fig.add_subplot(2, 1, 1)
     plt.plot(int_len_list, avg_runtimes)
     if max_rt:
         plt.plot(int_len_list, max_runtimes)
+        plt.legend(['Average Runtime', 'Max Runtime'], loc='upper left')
     if log:
         ax.set_yscale("log", nonposy='clip')
-    plt.legend(['Average Runtime', 'Max Runtime'], loc='upper left')
+        plt.ylabel("Log Runtime in microseconds")
+        save_name = os.path.join(save_dir, 'avg_log_runtime.png')
+    else:
+        plt.ylabel("Runtime in microseconds")
+        save_name = os.path.join(save_dir, 'avg_runtime.png')
     plt.xlabel("Integer Size")
-    plt.ylabel("Runtime in microseconds")
     plt.title("Runtime for Multiplying Long Integers")
-    plt.show()
+    plt.savefig(save_name, dpi=300)
+    plt.close()
 
 
 def multiply_simulation(int_len, algorithm, n=1000):
@@ -61,7 +82,7 @@ def multiply_simulation(int_len, algorithm, n=1000):
         end_time = time()
         diff = end_time - start_time
         runtimes.append(diff)
-    return np.mean(runtimes), np.max(runtimes)
+    return np.mean(runtimes), np.max(runtimes), runtimes
 
 
 def python_optimization(x, y):
