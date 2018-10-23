@@ -7,8 +7,9 @@ Please see environment-setup.pdf and set up schiapp_assigment3.yml so that all t
 3.	You’ll be prompted to accept terms, then install to ~/miniconda3 – do all of this.	 
 4.	Next, you’ll want to write: echo “export PATH=$HOME/miniconda3/bin:$PATH” >> ~/.bashrc 
 5.	Now, you’ll have Anaconda installed. 
-6.	Run: conda env create --yes -f schiapp_assigment3.yml.yml 
+6.	Run: ```conda env create --yes -f schiapp_assigment3.yml ```
 7.	This should take you through an installation process, agree to all questions posed by Anaconda. 
+8. To activate: ```conda activate cot5405-assignment2```
  
 ### On Linux: 
 1.	In the terminal, run ```curl -SL -o miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh ```
@@ -16,12 +17,19 @@ Please see environment-setup.pdf and set up schiapp_assigment3.yml so that all t
 3.	You’ll be prompted to accept terms, then install to ~/miniconda3 – do all of this.	 
 4.	Next, you’ll want to write: echo “export PATH=$HOME/miniconda3/bin:$PATH” >> ~/.bashrc 
 5.	Now, you’ll have Anaconda installed. 
-6.	Run: conda env create --yes -f schiapp_assigment3.yml.yml 
+6.	Run: ```conda env create --yes -f schiapp_assigment3.yml ```
 7.	This should take you through an installation process, agree to all questions posed by Anaconda. 
+8. To activate: ```conda activate cot5405-assignment2``
+
 ### On Windows: 
 1.	Install Anaconda for Windows from https://www.anaconda.com/download/#windows (pick the Python 2.7 edition). 
 2.	Go through the Graphical Installer. 
 3.	Once this has finished installing, open “Anaconda Navigator” 
+4. Go to "environments" in the lefthand panel and at the bottom, press import and brows for the file schiapp_assigment3.yml.
+5. Open "anaconda prompt" (can be found by searching the windows menu)
+6.	Run: ```conda env create --yes -f schiapp_assigment3.yml ```
+7.	This should take you through an installation process, agree to all questions posed by Anaconda. 
+8. To activate: ```conda activate cot5405-assignment2``
 
 ### Manually in Python2.7
 If you prefer to install packages on your own, the following are required:
@@ -29,6 +37,12 @@ If you prefer to install packages on your own, the following are required:
 * networkx
 * matplotlib
 * progressbar2
+
+There is also a requirements.txt saved for easier use. To use this:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Running the program
 The program will run in the command line with: 
