@@ -1,9 +1,8 @@
+from __future__ import print_function
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import os
-import progressbar
-from scipy.stats import norm
 
 
 #### Network Simulation ###
@@ -19,22 +18,32 @@ def init_graph():
 
 
 def run_simulation(p_births, simulations, time_steps, time_steps_collect, t_degree=4000):
+    """
+    For each probability, it runs a number of simulations, each of a network evolution for t timesteps.
+    The number of nodes, edges, and degree disributions are averaged over each simulation and returned in a dictionary.
+    :param p_births:
+    :param simulations:
+    :param time_steps:
+    :param time_steps_collect:
+    :param t_degree:
+    :return: 
+    """
     num_nodes = dict()
     num_edges = dict()
     degree_dist_dict = list()
     # Iterate through each probability passed
     for p in p_births:
-        print("Running {} simulations for {} probability of birth".format(simulations, p))
         # Run the number of simulations passed
         steps_nodes = {"step1": 0, "step2": 0, "step3": 0, "step4": 0, "step5": 0}
         steps_edges = {"step1": 0, "step2": 0, "step3": 0, "step4": 0, "step5": 0}
         degree_hist = dict()
         for simulation in range(simulations):
-            print("Beginning simulation {} with {} time steps".format(simulation + 1, time_steps))
             graph = init_graph()  # re-initialize for each simulation
             nodes_t_list = list()
             edges_t_list = list()
-            for t in progressbar.progressbar(range(1, time_steps + 1)):  # iterate network evolution over t timesteps
+            # for t in progressbar.progressbar(range(1, time_steps + 1)):  # iterate network evolution over t timesteps
+            for t in range(1, time_steps + 1):  # iterate network evolution over t timesteps
+                print("Running {} simulation {} ---- timestep {}/{}".format(p, simulation+1, t, time_steps), end='\r')
                 if len(graph.nodes) == 0 or len(graph.edges) == 0:
                     graph = init_graph()
                 try:
@@ -99,7 +108,6 @@ def run_simulation(p_births, simulations, time_steps, time_steps_collect, t_degr
                     print("False")
                     degree_sum_dist = np.zeros(len(degree_hist))
                     degree_sum_dist = [sum(x) for x in zip(degree_sum_dist, degree_hist)]
-        print("Finished simulation {}".format(simulation + 1))
 
         num_nodes[str(p)] = {time_steps_collect[0]: steps_nodes['step1'] / simulations,
                              time_steps_collect[1]: steps_nodes['step2'] / simulations,
@@ -232,15 +240,19 @@ def cumulative_dist(data, bins=20):
 if __name__ == "__main__":
     # set up params
     np.random.seed(12)
-    time_steps = 5000
-    t_degree = 4000
     p_births = [.6, .75, .9, .8]
-    simulations = 30
     markers = ("^", "s", "D", "D")
-    ylim = 4000
-    time_steps_collect = range(1000, 6000, 1000)
 
-    # p_births = [.8]  # testing
+    # Slower implementation
+    # time_steps = 5000
+    # t_degree = 4000
+    # p_births = [.6, .75, .9, .8]
+    # simulations = 30
+
+    # ylim = 4000
+    # time_steps_collect = range(1000, 6000, 1000)
+
+    # Faster implementation
     simulations = 10
     ylim = 400
     time_steps = 500
