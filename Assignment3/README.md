@@ -1,4 +1,17 @@
 # Preferential deletion in dynamic models of web-like networks by Narsingh Deo and Aurel Cami (2007)
+## Setting up environment manually in Python2.7
+If you prefer to install packages on your own, the following are required:
+* numpy
+* networkx
+* matplotlib
+* progressbar2
+
+There is also a requirements.txt saved for easier use. To use this:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Setting up environment via Conda
 Please see environment-setup.pdf and set up schiapp_assigment3.yml so that all the necessary packages are installed. 
 ### On MacOS: 
@@ -31,18 +44,6 @@ Please see environment-setup.pdf and set up schiapp_assigment3.yml so that all t
 7.	This should take you through an installation process, agree to all questions posed by Anaconda. 
 8. To activate: ```conda activate cot5405-assignment2``
 
-### Manually in Python2.7
-If you prefer to install packages on your own, the following are required:
-* numpy
-* networkx
-* matplotlib
-* progressbar2
-
-There is also a requirements.txt saved for easier use. To use this:
-
-```bash
-pip install -r requirements.txt
-```
 
 ### Running the program
 The program will run in the command line with: 
