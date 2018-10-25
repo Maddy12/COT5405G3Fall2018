@@ -26,7 +26,7 @@ def run_simulation(p_births, simulations, time_steps, time_steps_collect, t_degr
     :param time_steps:
     :param time_steps_collect:
     :param t_degree:
-    :return: 
+    :return:
     """
     num_nodes = dict()
     num_edges = dict()
