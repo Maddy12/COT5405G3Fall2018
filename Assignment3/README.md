@@ -10,7 +10,7 @@ Give an algorithm that increases the lengths of certain edges so that the result
 ### Example 
 Consider the tree in Figure 4.20, in which letters name the nodes and numbers indicate the edge lengths. 
 
-![alt text](figure420.png)
+![alt text](https://github.com/Maddy12/COT5405G3Fall2018/blob/master/Assignment3/figure420.PNG)
 
 The unique optimal solution for this instance would be to take the three length-1 edges and increase each of their lengths to 2. The resulting tree has zero skew, and the total edge length is 12, the smallest possible.
 
@@ -20,4 +20,11 @@ The unique optimal solution for this instance would be to take the three length-
 Please install networkx
 ```
 pip install networkx
+pip install matplotlib
+pip install numpy
 ``` 
+## To Run, simply run the program 
+```
+python timing_circuit_algorithm.py
+```
+All plots will be saved in the same directory as the program. 
