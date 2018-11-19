@@ -109,7 +109,6 @@ def run_algorithms(layers, brute_force=True, draw=False):
         max_edge_length = max(tree.path_lengths.values())
         for leaf in range(tree.leafs[0], tree.leafs[-1]+1):
             edge = list(graph.edges(leaf))[0]
-            # print("Running leaf {} for edge {}".format(leaf, edge))
             current_path_length = tree.path_lengths[leaf]
             additive_value = max_edge_length - current_path_length
             graph[edge[1]][edge[0]]['weight'] = tree.weight_dictionary[(edge[1], edge[0])] + additive_value
@@ -118,6 +117,7 @@ def run_algorithms(layers, brute_force=True, draw=False):
     if draw:
         title = ['after_brute_force' if brute_force else 'after_algorithm']
         tree.draw_tree(title[0])
+        plt.close()
     new_weight_dictionary = nx.get_edge_attributes(graph, 'weight')
     total_edge_sum = sum(new_weight_dictionary.values())
     results = test_results(tree)
@@ -156,7 +156,7 @@ def simulate(iterations):
         edge_sum_algorithm.append(edge_sum)
         if not results:
             failures_algorithm[i] = diff
-    plt.subplot(1,2,1)
+    plt.close()
     plt.plot(layers, runtimes_algorithm, label='My Solution')
     plt.plot(layers, runtimes_brute_force, label='Brute Force')
     for x, y in failures_algorithm.items():
@@ -179,7 +179,9 @@ def simulate(iterations):
     plt.show()
 
 
+
 if __name__ == "__main__":
     diff, total_edge_sum, results = run_algorithms(layers=4, brute_force=True, draw=True)
     diff, total_edge_sum, results = run_algorithms(layers=4, brute_force=False, draw=True)
-    simulate(iterations=15)
+    plt.close()
+    simulate(iterations=9)  # equals 2 to 10 layers
